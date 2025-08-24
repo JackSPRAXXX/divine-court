@@ -1,0 +1,26 @@
+name = "wasp-edge"
+main = "src/index.ts"
+compatibility_date = "2025-08-24"
+
+routes = [
+  { pattern = "spraxxx.com/*", zone_name = "spraxxx.com" },
+  { pattern = "spraxxx.ai/*",  zone_name = "spraxxx.ai"  },
+  { pattern = "spraxxx.tv/*",  zone_name = "spraxxx.tv"  },
+  { pattern = "spraxxx.xxx/*", zone_name = "spraxxx.xxx" },
+  { pattern = "spraxxx.ca/*",  zone_name = "spraxxx.ca"  }
+]
+
+[durable_objects]
+bindings = [{ name = "RATE_LIMITER", class_name = "RateLimiter" }]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["RateLimiter"]
+
+[vars]
+TURNSTILE_SITE_KEY = "your_site_key"
+TURNSTILE_SECRET   = "your_secret_key"
+
+[[queues.producers]]
+queue = "attack-events"
+binding = "ATTACK_EVENTS"
