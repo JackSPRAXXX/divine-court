@@ -1,0 +1,11 @@
+name = "case-ingestor"
+main = "src/index.ts"
+compatibility_date = "2025-08-24"
+
+[[queues.consumers]]
+queue = "attack-events"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "divine_court"
+database_id = "replace-with-your-d1-id"
