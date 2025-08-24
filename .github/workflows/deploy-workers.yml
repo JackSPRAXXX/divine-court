@@ -1,0 +1,38 @@
+name: Deploy Workers
+
+on:
+  push:
+    paths:
+      - 'wasp-edge/**'
+      - 'case-ingestor/**'
+
+jobs:
+  deploy-wasp-edge:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wasp-edge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN_WORKERS }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+  
+  deploy-case-ingestor:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: case-ingestor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN_WORKERS }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
